@@ -1,6 +1,15 @@
 pipeline
 {
     agent any
+    
+    environment
+    {
+        repoName = "addition-image"
+        region = "ap-south-1"
+        accountId = "730335267178"
+        ECR_URI = "${accountId}.dkr.ecr.${region}.amazonaws.com/${repoName}:latest"
+
+    }
     stages
     {
         stage('Create ECR Repo')
@@ -9,7 +18,6 @@ pipeline
             {
                 script
                 {
-                    def repoName = "addition-image"
                     withCredentials([aws(credentialsId:'AWS-Cred', region:'ap-south-1')])
                     {
                         sh "aws ecr create-repository --repository-name ${repoName} --region ap-south-1 || true"
@@ -24,7 +32,7 @@ pipeline
             {
             script
             {
-                sh 'docker build -t addition-image .'
+                sh "docker build -t ${repoName} ."
             }
             }
         }
@@ -35,10 +43,6 @@ pipeline
             {
             script
             {
-            def repoName = 'addition-image'
-            def region = 'ap-south-1'
-            def accountId = '730335267178'
-
             withCredentials([aws(credentialsId:'AWS-Cred', region:'ap-south-1')])
             {
                 sh """ 
