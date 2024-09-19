@@ -30,6 +30,8 @@ pipeline
 
         stage('Push image to ECR')
         {
+            steps
+            {
             script
             {
             def repoName = 'addition-image'
@@ -44,6 +46,7 @@ pipeline
                 sh "docker tag addition-image:latest ${accountId}.dkr.ecr.${region}.amazonaws.com/${repoName}:latest"
 
                 sh "docker push ${accountId}.dkr.ecr.${region}.amazonaws.com/${repoName}:latest"
+            }
             }
             }
         }
