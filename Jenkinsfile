@@ -12,7 +12,7 @@ pipeline
                     def repoName = "addition-image"
                     withCredentials([aws(credentialsId:'AWS-Cred', region:'ap-south-1')])
                     {
-                        sh 'aws ecr create-repository --repository-name ${repoName} --region ap-south-1 || true'
+                        sh "aws ecr create-repository --repository-name ${repoName} --region ap-south-1 || true"
                     }
                 }
             }
