@@ -55,5 +55,30 @@ pipeline
             }
             }
         }
+
+        stage('Terraform init')
+        {
+            steps
+            {
+                script
+                {
+                    sh "terraform init"
+                }
+            }
+        }
+        stage('Terraform apply')
+        {
+            steps
+            {
+
+                script
+                {
+                    withCredentials([aws(credentialsId:'AWS-Cred', region:'ap-south-1')])
+                    {
+                    sh "terraform apply -auto-approve"
+                    }
+                }
+            }
+        }
     }
 }
