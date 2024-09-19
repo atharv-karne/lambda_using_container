@@ -42,7 +42,7 @@ pipeline
             withCredentials([aws(credentialsId:'AWS-Cred', region:'ap-south-1')])
             {
                 sh """ 
-                aws ecr get-login-password --region ${region} | docker login --username AWS -password-stdin ${accountId}.dkr.ecr.${region}.amazonaws.com
+                aws ecr get-login-password --region ${region} | docker login --username AWS --password-stdin ${accountId}.dkr.ecr.${region}.amazonaws.com
                 """
                 sh "docker tag addition-image:latest ${accountId}.dkr.ecr.${region}.amazonaws.com/${repoName}:latest"
 
